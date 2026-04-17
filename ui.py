@@ -1,7 +1,7 @@
 import customtkinter as ctk
 
 ctk.set_appearance_mode("Dark")
-ctk.set_default_color_theme("blue") 
+ctk.set_default_color_theme("dark-blue") 
 
 class CalculatorView:
     def __init__(self, action_callback):
@@ -29,7 +29,8 @@ class CalculatorView:
             textvariable=self.display_var,
             font=("Consolas", 30),
             justify="right",
-            height=75
+            height=75,
+            state="disabled",
         )
         self.screen.grid(row=0, column=0, columnspan=4, padx=10, pady=20, sticky="nsew")
 
@@ -48,9 +49,10 @@ class CalculatorView:
                 self.root,
                 text=button,
                 font=("Consolas", 20),
-                command=lambda x=button: self.action_callback(x),
+                command=lambda b=button: self.action_callback(b),
                 width=50, 
-                height=50)
+                height=50
+            )
             btn.grid(row=row_val, column=col_val, padx=5, pady=5, sticky="nsew")
             
             col_val += 1
