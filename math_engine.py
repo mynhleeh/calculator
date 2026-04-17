@@ -16,8 +16,10 @@ class MathEngine():
         return int(value) if value.is_integer() else value
 
     def calculate(self, a: str, opr: str, b: str):
-        valA, valB = float(a), float(b)
-        func = self.operations.get(opr)
+        try:
+            valA, valB = float(a), float(b)
+            func = self.operations.get(opr)
 
-        if func: return self.format_result(func(valA, valB))
-        return "ERROR"
+            if func: return self.format_result(func(valA, valB))
+        except: 
+            return "ERROR"

@@ -15,7 +15,7 @@ class calculate_control:
             self.cur, self.pre, self.opr = "", "", ""
             self.reset_next_input = False
         
-        elif char == 'DEL':
+        elif char == '⌫':
             if self.cur: self.cur = self.cur[:-1]
             elif self.opr: self.cur, self.pre, self.opr = self.pre, "", ""
 
