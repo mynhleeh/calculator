@@ -18,6 +18,9 @@ class Calculator:
         # UI
         self.setupUI()
 
+        # Number
+        self.current, self.pre, self.opr = "", "", ""
+
     def setupUI(self):
         # Auto resize
         for i in range(5): self.root.grid_rowconfigure(i, weight=1)
@@ -59,19 +62,27 @@ class Calculator:
     def on_click(self, char):
         current_val = self.display_var.get()
 
-        if char == 'C': self.display_var.set("")
+        if char == 'C': self.reset_state()
         elif char == '=':
-            try:
-                parts = re.split(r'(\+|-|\*|/|x)', current_val)
-                
-                if len(parts) == 3:
-                    a, opr, b = parts
-                    result = self.engine.calculate(a, opr, b)
-                    self.display_var.set(str(result))
-                else: self.display_var.set("ERROR")
-            except Exception: self.display_var.set("ERROR")
+            if self.current and self.pre and self.opr:
+                result = self.engine.calculate(self.pre, self.opr, self.current)
+                self.display_var.set(str(result))
+            else: self.display_var.set("ERROR")
+        
+        elif char in ['+', '-', '*', '/']:
+            self.display_var.set(current_val + char)
 
-        else: self.display_var.set(current_val + char)
+            if self.current:
+                self.pre = self.current
+                self.opr = char
+                self.current = ""
+        else: 
+            self.current = char
+            self.display_var.set(current_val + char)
+
+    def reset_state(self):
+        self.current, self.pre, self.opr = "", "", ""
+        self.display_var.set("0")
 
     def run(self):
         self.root.mainloop()

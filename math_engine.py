@@ -1,21 +1,15 @@
-class MathEngine():
+class MathEngine():    
     @staticmethod
-    def parse(val):
-        try: return int(val)
-        except ValueError:
-            try: return float(val)
-            except: raise "ERROR"
-    
-    @staticmethod
-    def calculate(a, opr: str, b):
-        valA = MathEngine.parse(a)
-        valB = MathEngine.parse(b)
+    def calculate(a: str, opr: str, b: str):
+        try:
+            valA, valB = float(a), float(b)
 
-        if opr == '+': return valA + valB
-        if opr == '-': return valA - valB
-        if opr == '*' or opr == 'x': return valA * valB
-        if opr == '/': return valA / valB if valB != 0 else "ERROR"
-        return "ERROR"
+            if opr == '+': return valA + valB
+            if opr == '-': return valA - valB
+            if opr == '*' or opr == 'x': return valA * valB
+            if opr == '/': return valA / valB
+        except:
+            return "ERROR"
     
 
 if __name__ == '__main__':
