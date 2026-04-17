@@ -1,27 +1,22 @@
 import customtkinter as ctk
-from math_engine import MathEngine
-import re
 
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue") 
 
-class Calculator:
-    def __init__(self, engine):
-        self.engine = engine
-        
-        # Window
+class View:
+    def __init__(self, action_callback):
         self.root = ctk.CTk()
-        self.root.title("Calculator")
-        self.root.geometry("300x400")
+        
+        # root properties
         self.display_var = ctk.StringVar(value="")
-
-        # UI
+        self.action_callback = action_callback
         self.setupUI()
 
-        # Number
-        self.current, self.pre, self.opr = "", "", ""
-
     def setupUI(self):
+        # Window
+        self.root.title("Calculator")
+        self.root.geometry("300x400")
+
         # Auto resize
         for i in range(5): self.root.grid_rowconfigure(i, weight=1)
         for i in range(4): self.root.grid_columnconfigure(i, weight=1)
@@ -49,7 +44,7 @@ class Calculator:
             btn = ctk.CTkButton(
                 self.root,
                 text=button,
-                command=lambda x=button: self.on_click(x),
+                command=lambda x=button: self.action_callback(x),
                 width=50, 
                 height=50)
             btn.grid(row=row_val, column=col_val, padx=5, pady=5, sticky="nsew")
@@ -59,30 +54,8 @@ class Calculator:
                 col_val = 0
                 row_val += 1
 
-    def on_click(self, char):
-        current_val = self.display_var.get()
-
-        if char == 'C': self.reset_state()
-        elif char == '=':
-            if self.current and self.pre and self.opr:
-                result = self.engine.calculate(self.pre, self.opr, self.current)
-                self.display_var.set(str(result))
-            else: self.display_var.set("ERROR")
-        
-        elif char in ['+', '-', '*', '/']:
-            self.display_var.set(current_val + char)
-
-            if self.current:
-                self.pre = self.current
-                self.opr = char
-                self.current = ""
-        else: 
-            self.current = char
-            self.display_var.set(current_val + char)
-
-    def reset_state(self):
-        self.current, self.pre, self.opr = "", "", ""
-        self.display_var.set("0")
+    def update_screen(self, text: str):
+        self.display_var.set(text)
 
     def run(self):
         self.root.mainloop()
