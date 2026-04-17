@@ -1,17 +1,22 @@
-class MathEngine():    
-    @staticmethod
-    def calculate(a: str, opr: str, b: str):
+import operator
+
+class MathEngine():
+    def __init__(self):
+        self.operations = {
+            '+': operator.add,
+            '-': operator.sub,
+            '*': operator.mul,
+            '/': operator.truediv,
+            '%': operator.mod,
+            '^': operator.pow,
+            # '.': operator.
+        }
+
+    def calculate(self, a: str, opr: str, b: str):
         try:
             valA, valB = float(a), float(b)
+            func = self.operations.get(opr)
 
-            if opr == '+': return valA + valB
-            if opr == '-': return valA - valB
-            if opr == '*' or opr == 'x': return valA * valB
-            if opr == '/': return valA / valB
-        except:
-            return "ERROR"
-    
-
-if __name__ == '__main__':
-    a, opr, b = input().split()
-    print(MathEngine.calculate(a, opr, b))
+            if func: return func(valA, valB)
+            else: return "ERROR"
+        except: return "ERROR"
