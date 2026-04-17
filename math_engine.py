@@ -12,11 +12,15 @@ class MathEngine():
             # '.': operator.
         }
 
+    @staticmethod
+    def format_result(value: float):
+        return int(value) if value.is_integer() else value
+
     def calculate(self, a: str, opr: str, b: str):
         try:
             valA, valB = float(a), float(b)
             func = self.operations.get(opr)
 
-            if func: return func(valA, valB)
+            if func: return self.format_result(func(valA, valB))
             else: return "ERROR"
         except: return "ERROR"

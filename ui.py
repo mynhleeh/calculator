@@ -1,6 +1,6 @@
 import customtkinter as ctk
 
-ctk.set_appearance_mode("System")
+ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue") 
 
 class CalculatorView:
@@ -27,7 +27,7 @@ class CalculatorView:
         self.screen = ctk.CTkEntry(
             self.root, 
             textvariable=self.display_var,
-            font=("Arial", 24),
+            font=("Consolas", 30),
             justify="right",
             height=75
         )
@@ -47,6 +47,7 @@ class CalculatorView:
             btn = ctk.CTkButton(
                 self.root,
                 text=button,
+                font=("Consolas", 20),
                 command=lambda x=button: self.action_callback(x),
                 width=50, 
                 height=50)
