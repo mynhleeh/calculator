@@ -178,14 +178,10 @@ class CalculatorControl:
             self.change_state(InitState())
             self.updateUI("0")
 
-        elif char in '0123456789.':
-            self.state.handle_number(self, char)
-        elif char in "+-*/%^": 
-            self.state.handle_operator(self, char)
-        elif char == '=':
-            self.state.handle_equal(self)
-        elif char == '⌫':
-            self.state.handle_backspace(self)
+        elif char in '0123456789.': self.state.handle_number(self, char)
+        elif char in "+-*/%^":  self.state.handle_operator(self, char)
+        elif char == '=': self.state.handle_equal(self)
+        elif char == '⌫': self.state.handle_backspace(self)
 
     def run(self):
         self.view.run()
