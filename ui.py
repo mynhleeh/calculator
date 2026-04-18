@@ -65,7 +65,7 @@ class CalculatorView:
 
         if keysym == 'Return': self.action_callback('=')
         elif keysym == 'Escape': self.action_callback('C')
-        elif keysym == 'BackSpace': self.action_callback('⌫')
+        elif keysym == 'BackSpace' or keysym == "KP_Enter": self.action_callback('⌫')
         elif char in [str(x) for x in range(10)] + ['+', '-', '*', '/', '%', '^', '.']: self.action_callback(char)
 
     def update_screen(self, text: str):
